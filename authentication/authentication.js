@@ -2,6 +2,7 @@ const jwt=require('jsonwebtoken');
 require('dotenv').config();
 const createError =require('http-errors');
 const uploadConfigration=require('../authentication/uploadConfig.js');
+const upload=require('../authentication/uploadMidleware.js');
 class Authentication{
     static jwtCreate= async (id,email)=>{
         try{
@@ -15,7 +16,8 @@ class Authentication{
     }
 
     static uploadConfig = async(req,res,next)=> {
-        const uploadinfo = uploadConfigration.single('profile_picture'); 
+        try{
+        const uploadinfo = await uploadConfigration.single('profile_picture'); 
           uploadinfo(req, res, function (err) {
             if (err) {
                 next(createError(500,err.message));  
@@ -28,10 +30,15 @@ class Authentication{
             if(!req.file || Object.keys(req.file).length==0){
                 next(createError(402,'image is required!'));   
             }
-            //console.log(req.file,'papa')
+           // console.log(req.file,'papa')
             res.locals.filename=req.file.filename;
             next();
         })
+
+        }catch(error){
+            next(createError(402,'image is required!'));
+        }
+          
     }
 
 }

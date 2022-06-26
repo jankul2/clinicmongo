@@ -25,20 +25,19 @@ class UserController{
 
  userRegister= async (req,res,next)=>{
     try {
-    const checkEmail= await UserModel.findOne({email:req.body.email});
-    if(checkEmail.email){ 
+
+    let checkEmail= await UserModel.findOne({email:req.body.email});
+    if(checkEmail){ 
         throw 'email already checked!';
     }
    
     const salt = bcrypt.genSaltSync(10);
     const hashPassword = bcrypt.hashSync(req.body.password, salt);
-    const userReg = new UserModel({
-        email: req.body.email,
-        password: hashPassword,
-        gender: req.body.gender
-    });
+    req.body.password=hashPassword;
+    const userReg = new UserModel(req.body);
     
         const userRegInfo = await userReg.save();
+       
         let data={success:1,dataInfo:userRegInfo};
         res.send(data);
       
