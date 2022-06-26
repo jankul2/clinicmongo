@@ -50,10 +50,22 @@ addPost=(async (req,res,next)=>{
  allComment=(async (req,res,next)=>{
     try{
         CommentsModel.find({}).populate('posts').exec((err,docs)=>{
-          res.send(docs);
+            let data={success:1,dataInfo:docs};
+            res.send(data);
         });
         //let data={success:1,dataInfo:userRegInfo};
         //res.send(data);
+    }
+    catch (error) {
+        next(createError(404,{success:0,message:error.message}));
+    }
+ });
+ postUpdate=(async (req,res,next)=>{
+    try{
+        let id=req.params.id;
+       const  postupdate= await PostsModel.findByIdAndUpdate(id,{$set:req.body},{new:true});
+       let data={success:1,dataInfo:postupdate};
+       res.send(data);
     }
     catch (error) {
         next(createError(404,{success:0,message:error.message}));

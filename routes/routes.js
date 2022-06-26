@@ -12,6 +12,7 @@ router.post('/login',userCon.userLogin);
 router.post('/register',userCon.userRegister);
 router.get('/profile',AuthMiddileware.jwtVerify,userCon.userProfile);
 router.post('/addpost',[AuthMiddileware.jwtVerify],PostCon.addPost);
+router.put('/update-post/:id',[AuthMiddileware.jwtVerify],PostCon.postUpdate);
 router.post('/addcategory',[AuthMiddileware.jwtVerify],PostCon.addCategeory);
 router.post('/addcomment',[AuthMiddileware.jwtVerify],PostCon.addComment);
 router.get('/allcomment',[AuthMiddileware.jwtVerify],PostCon.allComment);
