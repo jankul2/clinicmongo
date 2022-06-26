@@ -16,7 +16,7 @@ router.post('/addcategory',[AuthMiddileware.jwtVerify],PostCon.addCategeory);
 router.post('/addcomment',[AuthMiddileware.jwtVerify],PostCon.addComment);
 router.get('/allcomment',[AuthMiddileware.jwtVerify],PostCon.allComment);
 router.get('/getinfo',async (req,res)=>{
-    PostsModel.find({}).populate('comments').exec((err,docs)=>{
+    PostsModel.find({}).populate({path:'comments',match: { message: 'this is very awsome post new 2' }}).exec((err,docs)=>{
         res.send(docs);
       });
 })
