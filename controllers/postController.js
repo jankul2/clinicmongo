@@ -39,7 +39,6 @@ addPost=(async (req,res,next)=>{
         postRelated.comments.push(CommentAdd);
         //console.log(postRelated,'test');
         postRelated.save();
-
         let data={success:1,dataInfo:userRegInfo};
         res.send(data);
     }

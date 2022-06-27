@@ -8,7 +8,10 @@ const blogSchema = new mongoose.Schema({
    },
   author: String,
   content: String,
-  categories:[],
+  categories:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'categories'
+  }],
   date: { type: Date, default: Date.now },
   feature_image:{
     type:String,

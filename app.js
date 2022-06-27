@@ -12,6 +12,7 @@ app.use(express.urlencoded({extended:true}));
 app.use('/images', express.static(path.join(__dirname, '..', 'public','assets', 'images')))
 app.use('/api', routes);
 app.use('/traders', routesTraders);
+
 app.use((req,res,next)=>{
     next(createError(404,'page not found!'));
 });
